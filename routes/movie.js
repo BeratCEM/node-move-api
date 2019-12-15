@@ -92,7 +92,7 @@ router.get('/top/10',(req,res) =>{
 router.get('/between/:start_year/:end_year',(req,res) =>{ 
   const {start_year,end_year} = req.params;
   const promise = Movie.find({ 
-      year: {"$gte":parseInt(start_year),"$lte": parseInt(end_year)}
+      year: {"$gte":parseInt(start_year),"$lte": parseInt(end_year) }
   });
   promise.then((data) =>{
     res.json(data);
