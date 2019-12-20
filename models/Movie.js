@@ -12,7 +12,11 @@ const MovieSchema = new Schema({
       category:String,
       country: String,
       year: Number,
-      imbd_score: Number,
+      imbd_score:{
+          type: Number,
+          maxlength:10,
+          minlength:1
+      },
       createdAt:{
           type: Date,
           default: Date.now
