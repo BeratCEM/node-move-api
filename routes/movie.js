@@ -38,11 +38,11 @@ promise.then((data) => {
             from:'directors',
             localField: 'director_id',
             foreignField: '_id',
-            as: 'director'
+            as: 'directors'
           }
         },
         {
-          $undwind:'$director'
+          $unwind:'$directors'
         }
       ]);
       promise.then((data) =>{
