@@ -20,7 +20,7 @@ router.post('/', (req, res, next) => {
 router.get('/:director_id',(req,res) =>{ 
   const promise = directorModel.aggregate(
     [
-      {
+      {     //belli bir id ye sahip director için yazdık
             $match:{
               '_id': mongoose.Types.ObjectId(req.params.director_id)
             }
@@ -67,4 +67,32 @@ router.get('/:director_id',(req,res) =>{
       res.json(err);
   })
 });
+
+router.put('/:director_id',(req,res,next) =>{ 
+  const promise = directorModel.findByIdAndUpdate(req.params.director_id,req.body,{new:true});
+  promise.then((director) =>{
+    if (!director) {
+      next({ message: 'The director was not found.',code:99});
+  } else {
+      res.json(director);
+  }
+  }).catch((err) =>{
+      res.json(err);
+  })
+});
+
+
+router.delete('/:movie_id',(req,res,next) =>{ 
+  const promise = directorModel.findByIdAndRemove(req.params.directorModel);
+  promise.then((director) =>{
+    if (!director) {
+      next({ message: 'The director was not found.',code:99});
+  } else {
+      res.json(director);
+  }
+  }).catch((err) =>{
+      res.json(err);
+  })
+});
+
 module.exports = router;
