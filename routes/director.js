@@ -16,51 +16,6 @@ router.post('/', (req, res, next) => {
     })
 });
 
-router.get('/',(req,res) =>{ 
-  const promise = directorModel.aggregate(
-    [
-      {
-            $lookup:{
-                 from:'movies',
-                 localField: '_id',
-                 foreignField: 'director_id',
-                 as: 'movies'
-            }
-      },
-      {
-            $unwind:{
-                 path: '$movies',
-                 preserveNullAndEmptyArrays: true
-            }
-      },
-      {
-            $group:{
-                  _id:{
-                    _id: '$_id',
-                    name:'$name',
-                    surname:'$surname',
-                    bio:'$bio'
-                  },
-                  movies:{
-                    $push:'$movies'
-                  }
-            }
-      },
-      {
-            $project:{
-              _id:'$_id._id',
-              name:'$_id.name',
-              surname:'$_id.surname',
-              movies:'$movies'
-            }
-      }
-    ]);
-  promise.then((data) =>{
-    res.json(data);
-  }).catch((err) =>{
-      res.json(err);
-  })
-});
 
 router.get('/:director_id',(req,res) =>{ 
   const promise = directorModel.aggregate(
